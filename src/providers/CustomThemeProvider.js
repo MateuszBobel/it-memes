@@ -1,4 +1,5 @@
 import { ThemeProvider, createTheme } from '@mui/material';
+import PropTypes from 'prop-types';
 
 const theme = createTheme({
   palette: {
@@ -24,7 +25,10 @@ const theme = createTheme({
   },
 });
 
-// eslint-disable-next-line react/prop-types
 export default function CustomThemeProvider({ children }) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }
+
+CustomThemeProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};
