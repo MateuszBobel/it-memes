@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,7 +17,7 @@ import Logo from '../../assets/logo.jpg';
 const settings = ['My Profile', 'Settings', 'Logout'];
 
 export default function NavBar() {
-  const isLogin = false;
+  const { isLogin } = useSelector((state) => state.auth);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -31,10 +33,18 @@ export default function NavBar() {
           sx={{ display: 'flex', justifyContent: 'space-between' }}
           disableGutters
         >
-          <Box component="img" src={Logo} sx={{ height: '50px', mr: 1 }} />
+          <Box component={Link} to="/">
+            <Box component="img" src={Logo} sx={{ height: '50px', mr: 1 }} />
+          </Box>
           {isLogin ? (
             <Box>
-              <Button color="primary" variant="contained" sx={{ mr: 1 }}>
+              <Button
+                component={Link}
+                to="/add"
+                color="primary"
+                variant="contained"
+                sx={{ mr: 1 }}
+              >
                 Add meme
               </Button>
               <Tooltip title="Open settings">
@@ -68,6 +78,8 @@ export default function NavBar() {
           ) : (
             <Box>
               <Button
+                component={Link}
+                to="/login"
                 sx={{
                   mr: 1,
                 }}
@@ -75,7 +87,12 @@ export default function NavBar() {
               >
                 Log in
               </Button>
-              <Button color="secondary" variant="contained">
+              <Button
+                component={Link}
+                to="/register"
+                color="secondary"
+                variant="contained"
+              >
                 Sign in
               </Button>
             </Box>
