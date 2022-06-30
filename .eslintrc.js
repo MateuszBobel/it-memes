@@ -17,6 +17,7 @@ module.exports = {
       'warn',
       { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
     ],
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'react/react-in-jsx-scope': 'off',
   },
 };
