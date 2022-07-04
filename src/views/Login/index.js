@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link as LinkComp } from 'react-router-dom';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import Link from '@mui/material/Link';
@@ -12,10 +12,12 @@ import Container from '@mui/material/Container';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import { loginUser } from '../../store/authSlice/auth.actions';
 import { emailValidation, passwordValidation } from '../../helpers';
 import Logo from '../../assets/logo.jpg';
 
 export default function Login() {
+  const dispatch = useDispatch();
   const matches = useMediaQuery('(min-width:900px)');
   const [emailInputValue, setEmailInputValue] = useState('');
   const [passwordInputValue, setPasswordInputValue] = useState('');
@@ -43,6 +45,8 @@ export default function Login() {
     if (!!emailErrorMessage || !!passwordErrorMessage) {
       setEmailError(emailErrorMessage);
       setPasswordError(passwordErrorMessage);
+    } else {
+      dispatch(loginUser(emailInputValue, passwordInputValue));
     }
   };
 
