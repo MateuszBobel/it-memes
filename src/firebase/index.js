@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
 const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREVASE_API_KEY,
@@ -8,3 +9,7 @@ const app = initializeApp({
   messagingSenderId: process.env.REACT_APP_FIREVASE_MESSAGING_SENDER_ID,
   appId: process.env.REACT_APP_FIREVASE_APP_ID,
 });
+
+const auth = getAuth(app);
+
+export default auth;
