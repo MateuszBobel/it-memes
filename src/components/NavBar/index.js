@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,17 +13,28 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Logo from '../../assets/logo.jpg';
+import { logoutUser } from '../../store/authSlice/auth.actions';
 
-const settings = ['My Profile', 'Settings', 'Logout'];
+const settings = [
+  { name: 'My Profile', isLink: true, link: '/profile' },
+  { name: 'Settings', isLink: true, link: '/settings' },
+  { name: 'Logout', isLink: false, link: null },
+];
 
 export default function NavBar() {
+  const dispatch = useDispatch();
   const { isLogin, isLoaded } = useSelector((state) => state.auth);
   const [anchorElUser, setAnchorElUser] = useState(null);
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const logoutButtonHandler = () => {
+    dispatch(logoutUser());
   };
 
   return (
@@ -68,11 +79,21 @@ export default function NavBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
-                  </MenuItem>
-                ))}
+                {settings.map((setting) =>
+                  setting.isLink ? (
+                    <MenuItem
+                      component={Link}
+                      to={setting.link}
+                      key={setting.name}
+                    >
+                      <Typography textAlign="center">{setting.name}</Typography>
+                    </MenuItem>
+                  ) : (
+                    <MenuItem onClick={logoutButtonHandler} key={setting.name}>
+                      <Typography textAlign="center">{setting.name}</Typography>
+                    </MenuItem>
+                  )
+                )}
               </Menu>
             </Box>
           )}
