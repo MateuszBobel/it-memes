@@ -25,7 +25,7 @@ const authSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
       state.isLoaded = true;
-      state.isLogin = true;
+      state.isLogin = !!action.payload;
     },
     fetchUserLoading(state, action) {
       state.fetchUserLoading = action.payload;
