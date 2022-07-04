@@ -17,7 +17,7 @@ import Logo from '../../assets/logo.jpg';
 const settings = ['My Profile', 'Settings', 'Logout'];
 
 export default function NavBar() {
-  const { isLogin } = useSelector((state) => state.auth);
+  const { isLogin, isLoaded } = useSelector((state) => state.auth);
   const [anchorElUser, setAnchorElUser] = useState(null);
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -36,7 +36,7 @@ export default function NavBar() {
           <Box component={Link} to="/">
             <Box component="img" src={Logo} sx={{ height: '50px', mr: 1 }} />
           </Box>
-          {isLogin ? (
+          {isLogin && isLoaded && (
             <Box>
               <Button
                 component={Link}
@@ -75,7 +75,8 @@ export default function NavBar() {
                 ))}
               </Menu>
             </Box>
-          ) : (
+          )}
+          {!isLogin && isLoaded && (
             <Box>
               <Button
                 component={Link}
