@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { fetchUser } from './store/authSlice/auth.actions';
 import Dashboard from './views/Dashboard';
 import Login from './views/Login';
+import Register from './views/Register';
 import PublicRote from './hoc/PublicRoute';
 
 function App() {
@@ -23,6 +24,14 @@ function App() {
           </PublicRote>
         }
         path="/login"
+      />
+      <Route
+        element={
+          <PublicRote>
+            <Register />
+          </PublicRote>
+        }
+        path="/register"
       />
     </Routes>
   );
