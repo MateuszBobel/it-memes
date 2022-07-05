@@ -62,7 +62,7 @@ export default function Login() {
       >
         <Box component="img" sx={{ maxWidth: '60px' }} src={Logo} alt="logo" />
         <Typography sx={{ fontWeight: 'bold' }} variant="h4" align="center">
-          Log in to IT Memes
+          Sign in to IT Memes
         </Typography>
         {loginUserError && (
           <Alert sx={{ width: '100%', margin: '10px' }} severity="error">
@@ -122,7 +122,7 @@ export default function Login() {
             size="large"
             onClick={loginButtonHandler}
           >
-            {loginUserLoading ? <CircularProgress size={26} /> : 'Log In'}
+            {loginUserLoading ? <CircularProgress size={26} /> : 'Sign In'}
           </Button>
         </Box>
         <Typography>
