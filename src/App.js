@@ -6,6 +6,7 @@ import LoadingScreen from './components/LoadingScreen';
 import Dashboard from './views/Dashboard';
 import Login from './views/Login';
 import Register from './views/Register';
+import ForgotPassword from './views/ForgotPassword';
 import PublicRote from './hoc/PublicRoute';
 
 function App() {
@@ -38,6 +39,14 @@ function App() {
           </PublicRote>
         }
         path="/register"
+      />
+      <Route
+        element={
+          <PublicRote>
+            <ForgotPassword />
+          </PublicRote>
+        }
+        path="/forgot-password"
       />
     </Routes>
   );
