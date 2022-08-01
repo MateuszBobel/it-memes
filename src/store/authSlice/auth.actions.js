@@ -19,6 +19,8 @@ import {
   resetPasswordError,
   logoutUserLoading,
   logoutUserError,
+  removeUserLoading,
+  removeUserError,
 } from './auth.slice';
 
 import auth from '../../firebase';
@@ -86,12 +88,12 @@ export const logoutUser = () => async (dispatch) => {
 };
 
 export const removeUser = () => async (dispatch) => {
-  dispatch(logoutUserLoading(true));
+  dispatch(removeUserLoading(true));
   try {
     await deleteUser(auth.getAuth().currentUser);
-    dispatch(logoutUserLoading(false));
+    dispatch(removeUserLoading(false));
   } catch (err) {
-    dispatch(logoutUserError(err.code));
-    dispatch(logoutUserLoading(false));
+    dispatch(removeUserError(err.code));
+    dispatch(removeUserLoading(false));
   }
 };

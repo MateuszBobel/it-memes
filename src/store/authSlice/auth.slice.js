@@ -20,6 +20,9 @@ const authSlice = createSlice({
 
     logoutUserLoading: false,
     logoutUserError: null,
+
+    removeUserLoading: false,
+    removeUserError: null,
   },
   reducers: {
     setUser(state, action) {
@@ -72,5 +75,7 @@ export const {
   resetPasswordError,
   logoutUserLoading,
   logoutUserError,
+  removeUserLoading,
+  removeUserError,
 } = authSlice.actions;
 export default authSlice.reducer;
