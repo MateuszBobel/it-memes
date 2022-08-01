@@ -7,8 +7,9 @@ import Dashboard from './views/Dashboard';
 import Login from './views/Login';
 import Register from './views/Register';
 import ForgotPassword from './views/ForgotPassword';
-import PublicRote from './hoc/PublicRoute';
+import Settings from './views/Settings';
 import NavBar from './components/NavBar';
+import PublicRoute from './hoc/PublicRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -32,9 +33,38 @@ function App() {
         }
         path="/"
       />
-      <Route element={<Login />} path="/login" />
-      <Route element={<Register />} path="/register" />
-      <Route element={<ForgotPassword />} path="/forgot-password" />
+      <Route
+        element={
+          <NavBar>
+            <Settings />
+          </NavBar>
+        }
+        path="/settings"
+      />
+      <Route
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        }
+        path="/login"
+      />
+      <Route
+        element={
+          <PublicRoute>
+            <Register />
+          </PublicRoute>
+        }
+        path="/register"
+      />
+      <Route
+        element={
+          <PublicRoute>
+            <ForgotPassword />
+          </PublicRoute>
+        }
+        path="/forgot-password"
+      />
     </Routes>
   );
 }
