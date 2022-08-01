@@ -10,6 +10,7 @@ import ForgotPassword from './views/ForgotPassword';
 import Settings from './views/Settings';
 import NavBar from './components/NavBar';
 import PublicRoute from './hoc/PublicRoute';
+import PrivateRoute from './hoc/PrivateRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -35,9 +36,11 @@ function App() {
       />
       <Route
         element={
-          <NavBar>
-            <Settings />
-          </NavBar>
+          <PrivateRoute>
+            <NavBar>
+              <Settings />
+            </NavBar>
+          </PrivateRoute>
         }
         path="/settings"
       />
