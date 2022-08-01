@@ -116,7 +116,7 @@ export default function NavBar({ children }) {
                   }}
                   variant="contained"
                 >
-                  Log in
+                  Sign in
                 </Button>
                 <Button
                   component={Link}
@@ -124,7 +124,7 @@ export default function NavBar({ children }) {
                   color="secondary"
                   variant="contained"
                 >
-                  Sign in
+                  Sign up
                 </Button>
               </Box>
             )}
