@@ -6,7 +6,7 @@ import {
   sendPasswordResetEmail,
   deleteUser,
 } from 'firebase/auth';
-
+import { doc, setDoc } from 'firebase/firestore';
 import {
   setUser,
   fetchUserLoading,
@@ -23,7 +23,7 @@ import {
   removeUserError,
 } from './auth.slice';
 
-import auth from '../../firebase';
+import auth, { usersCollection } from '../../firebase';
 
 export const fetchUser = () => (dispatch) => {
   dispatch(fetchUserLoading(true));
@@ -54,10 +54,19 @@ export const loginUser = (email, password) => async (dispatch) => {
   }
 };
 
-export const registerUser = (email, password) => async (dispatch) => {
+export const registerUser = (email, password, name) => async (dispatch) => {
   dispatch(registerUserLoading(true));
   try {
-    await createUserWithEmailAndPassword(auth, email, password);
+    const resp = await createUserWithEmailAndPassword(auth, email, password);
+    const docRef = doc(usersCollection, resp.user.uid);
+    await setDoc(docRef, {
+      uid: resp.user.uid,
+      createdAt: new Date(),
+      name,
+      jobPosition: '',
+      city: '',
+      profilImage: '',
+    });
     dispatch(registerUserLoading(false));
   } catch (err) {
     dispatch(registerUserError(err.code));
