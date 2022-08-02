@@ -25,3 +25,12 @@ export const nameValidation = (nameValue) => {
   }
   return '';
 };
+
+export const extractFileExtention = (fileName, defaultExtention = 'jpg') => {
+  const re = /(?:\.([^.]+))?$/;
+  const ext = re.exec(fileName)[1];
+  if (ext) {
+    return ext;
+  }
+  return defaultExtention;
+};
