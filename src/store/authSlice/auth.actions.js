@@ -6,7 +6,7 @@ import {
   sendPasswordResetEmail,
   deleteUser,
 } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 import {
   setUser,
   fetchUserLoading,
@@ -23,6 +23,8 @@ import {
   removeUserError,
 } from './auth.slice';
 
+import { setProfileInfo } from '../profileSlice/profile.slice';
+
 import auth, { usersCollection } from '../../firebase';
 
 export const fetchUser = () => (dispatch) => {
@@ -30,6 +32,9 @@ export const fetchUser = () => (dispatch) => {
   try {
     onAuthStateChanged(auth, async (user) => {
       if (user) {
+        const docRef = doc(usersCollection, user.uid);
+        const docSnap = await getDoc(docRef);
+        dispatch(setProfileInfo(docSnap.data()));
         dispatch(setUser(user));
         dispatch(fetchUserLoading(false));
       } else {
