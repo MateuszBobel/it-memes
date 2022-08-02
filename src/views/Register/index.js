@@ -13,14 +13,20 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import { registerUser } from '../../store/authSlice/auth.actions';
-import { emailValidation, passwordValidation } from '../../helpers';
+import {
+  emailValidation,
+  passwordValidation,
+  nameValidation,
+} from '../../helpers';
 import Logo from '../../assets/logo.jpg';
 
 export default function Register() {
   const dispatch = useDispatch();
   const matches = useMediaQuery('(min-width:900px)');
+  const [nameInputValue, setNameInputValue] = useState('');
   const [emailInputValue, setEmailInputValue] = useState('');
   const [passwordInputValue, setPasswordInputValue] = useState('');
+  const [nameError, setNameError] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const { registerUserError, registerUserLoading } = useSelector(
@@ -33,20 +39,27 @@ export default function Register() {
       setEmailInputValue(value);
     } else if (name === 'password') {
       setPasswordInputValue(value);
+    } else if (name === 'name') {
+      setNameInputValue(value);
     }
   };
 
   const registerButtonHandler = (e) => {
     e.preventDefault();
+    const nameErrorMessage = nameValidation(nameInputValue);
     const emailErrorMessage = emailValidation(emailInputValue);
     const passwordErrorMessage = passwordValidation(passwordInputValue);
+    setNameError('');
     setEmailError('');
     setPasswordError('');
-    if (!!emailErrorMessage || !!passwordErrorMessage) {
+    if (!!nameError || !!emailErrorMessage || !!passwordErrorMessage) {
+      setNameError(nameErrorMessage);
       setEmailError(emailErrorMessage);
       setPasswordError(passwordErrorMessage);
     } else {
-      dispatch(registerUser(emailInputValue, passwordInputValue));
+      dispatch(
+        registerUser(emailInputValue, passwordInputValue, nameInputValue)
+      );
     }
   };
 
@@ -70,6 +83,21 @@ export default function Register() {
           </Alert>
         )}
         <Box component="form" noValidate autoComplete="off">
+          <TextField
+            onChange={inputValueHandler}
+            size={matches ? 'small' : null}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="name"
+            placeholder="Name"
+            name="name"
+            autoComplete="name"
+            value={nameInputValue}
+            helperText={!!nameError && nameError}
+            error={!!nameError}
+          />
           <TextField
             onChange={inputValueHandler}
             size={matches ? 'small' : null}

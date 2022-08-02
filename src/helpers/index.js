@@ -18,3 +18,10 @@ export const passwordValidation = (passwordValue) => {
   }
   return '';
 };
+
+export const nameValidation = (nameValue) => {
+  if (!nameValue) {
+    return 'Name is required';
+  }
+  return '';
+};
