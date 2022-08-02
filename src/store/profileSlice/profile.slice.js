@@ -7,9 +7,13 @@ const profileSlice = createSlice({
       name: '',
       jobPosition: '',
       city: '',
+      avatar: '',
     },
     profileInfoLoading: false,
     profileInfoError: null,
+
+    profileAvatarLoading: false,
+    profileAvatarError: null,
   },
   reducers: {
     setProfileInfo(state, action) {
@@ -21,9 +25,24 @@ const profileSlice = createSlice({
     profileInfoError(state, action) {
       state.profileInfoError = action.payload;
     },
+    setProfileAvatar(state, action) {
+      state.profileInfo.avatar = action.payload;
+    },
+    profileAvatarLoading(state, action) {
+      state.profileAvatarLoading = action.payload;
+    },
+    profileAvatarError(state, action) {
+      state.profileAvatarError = action.payload;
+    },
   },
 });
 
-export const { setProfileInfo, profileInfoLoading, profileInfoError } =
-  profileSlice.actions;
+export const {
+  setProfileInfo,
+  profileInfoLoading,
+  profileInfoError,
+  setProfileAvatar,
+  profileAvatarLoading,
+  profileAvatarError,
+} = profileSlice.actions;
 export default profileSlice.reducer;

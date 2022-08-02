@@ -25,6 +25,7 @@ const settings = [
 export default function NavBar({ children }) {
   const dispatch = useDispatch();
   const { isLogin, isLoaded } = useSelector((state) => state.auth);
+  const { profileInfo } = useSelector((state) => state.profile);
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -62,7 +63,7 @@ export default function NavBar({ children }) {
                 </Button>
                 <Tooltip title="Open settings">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar alt="User avatar" src="" />
+                    <Avatar alt="User avatar" src={profileInfo.avatar} />
                   </IconButton>
                 </Tooltip>
                 <Menu

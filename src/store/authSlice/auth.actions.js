@@ -70,7 +70,7 @@ export const registerUser = (email, password, name) => async (dispatch) => {
       name,
       jobPosition: '',
       city: '',
-      profilImage: '',
+      avatar: '',
     });
     dispatch(registerUserLoading(false));
   } catch (err) {

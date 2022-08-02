@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { collection, getFirestore } from 'firebase/firestore';
+import { getStorage, ref } from 'firebase/storage';
 
 const app = initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -13,6 +14,10 @@ const app = initializeApp({
 
 const auth = getAuth(app);
 export const db = getFirestore(app);
+export const storage = getStorage();
+
+export const getAvatarFileRef = (userID, fileType) =>
+  ref(storage, `avatars/${userID}.${fileType}`);
 
 export const usersCollection = collection(db, 'users');
 
