@@ -23,6 +23,9 @@ const authSlice = createSlice({
 
     removeUserLoading: false,
     removeUserError: null,
+
+    changePasswordLoading: false,
+    changePasswordError: null,
   },
   reducers: {
     setUser(state, action) {
@@ -60,6 +63,12 @@ const authSlice = createSlice({
     logoutUserError(state, action) {
       state.resetPasswordError = action.payload;
     },
+    changePasswordLoading(state, action) {
+      state.changePasswordLoading = action.payload;
+    },
+    changePasswordError(state, action) {
+      state.changePasswordError = action.payload;
+    },
   },
 });
 
@@ -77,5 +86,7 @@ export const {
   logoutUserError,
   removeUserLoading,
   removeUserError,
+  changePasswordLoading,
+  changePasswordError,
 } = authSlice.actions;
 export default authSlice.reducer;

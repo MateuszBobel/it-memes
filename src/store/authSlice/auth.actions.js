@@ -5,6 +5,10 @@ import {
   signOut,
   sendPasswordResetEmail,
   deleteUser,
+  getAuth,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+  updatePassword,
 } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 import {
@@ -21,6 +25,8 @@ import {
   logoutUserError,
   removeUserLoading,
   removeUserError,
+  changePasswordLoading,
+  changePasswordError,
 } from './auth.slice';
 
 import { setProfileInfo } from '../profileSlice/profile.slice';
@@ -111,3 +117,18 @@ export const removeUser = () => async (dispatch) => {
     dispatch(removeUserLoading(false));
   }
 };
+
+export const updateUserPassword =
+  (password, newPassword) => async (dispatch) => {
+    dispatch(changePasswordLoading(true));
+    try {
+      const user = getAuth().currentUser;
+      const credential = EmailAuthProvider.credential(user.email, password);
+      await reauthenticateWithCredential(user, credential);
+      await updatePassword(user, newPassword);
+      dispatch(changePasswordLoading(false));
+    } catch (err) {
+      dispatch(changePasswordError(err.code));
+      dispatch(changePasswordLoading(false));
+    }
+  };
