@@ -63,6 +63,12 @@ const authSlice = createSlice({
     logoutUserError(state, action) {
       state.resetPasswordError = action.payload;
     },
+    removeUserLoading(state, action) {
+      state.removeUserLoading = action.payload;
+    },
+    removeUserError(state, action) {
+      state.removeUserError = action.payload;
+    },
     changePasswordLoading(state, action) {
       state.changePasswordLoading = action.payload;
     },

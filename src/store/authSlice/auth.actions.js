@@ -107,10 +107,13 @@ export const logoutUser = () => async (dispatch) => {
   }
 };
 
-export const removeUser = () => async (dispatch) => {
+export const removeUserProfile = (password) => async (dispatch) => {
   dispatch(removeUserLoading(true));
   try {
-    await deleteUser(auth.getAuth().currentUser);
+    const user = getAuth().currentUser;
+    const credential = EmailAuthProvider.credential(user.email, password);
+    await reauthenticateWithCredential(user, credential);
+    await deleteUser(user);
     dispatch(removeUserLoading(false));
   } catch (err) {
     dispatch(removeUserError(err.code));
