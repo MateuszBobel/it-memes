@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { Link, Outlet } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,7 +21,7 @@ const settings = [
   { name: 'Logout', isLink: false, link: null },
 ];
 
-export default function NavBar({ children }) {
+export default function NavBar() {
   const dispatch = useDispatch();
   const { isLogin, isLoaded } = useSelector((state) => state.auth);
   const { profileInfo } = useSelector((state) => state.profile);
@@ -88,6 +87,7 @@ export default function NavBar({ children }) {
                         component={Link}
                         to={setting.link}
                         key={setting.name}
+                        onClick={handleCloseUserMenu}
                       >
                         <Typography textAlign="center">
                           {setting.name}
@@ -133,12 +133,8 @@ export default function NavBar({ children }) {
         </Container>
       </AppBar>
       <Container sx={{ my: '80px' }} maxWidth="md">
-        {children}
+        <Outlet />
       </Container>
     </>
   );
 }
-
-NavBar.propTypes = {
-  children: PropTypes.node.isRequired,
-};

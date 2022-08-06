@@ -26,24 +26,17 @@ function App() {
 
   return (
     <Routes>
-      <Route
-        element={
-          <NavBar>
-            <Dashboard />
-          </NavBar>
-        }
-        path="/"
-      />
-      <Route
-        element={
-          <PrivateRoute>
-            <NavBar>
+      <Route path="/" element={<NavBar />}>
+        <Route element={<Dashboard />} index />
+        <Route
+          element={
+            <PrivateRoute>
               <Settings />
-            </NavBar>
-          </PrivateRoute>
-        }
-        path="/settings"
-      />
+            </PrivateRoute>
+          }
+          path="/settings"
+        />
+      </Route>
       <Route
         element={
           <PublicRoute>
