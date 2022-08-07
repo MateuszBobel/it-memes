@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import { textInputBasicValidation } from '../../helpers';
+import { basicInputValidation } from '../../helpers';
 import { updateProfileInfo } from '../../store/profileSlice/profile.actions';
 
 export default function ProfileInfoForm() {
@@ -22,7 +22,7 @@ export default function ProfileInfoForm() {
   const [cityInputValue, setCityInputValue] = useState(profileInfo.city);
 
   const saveProfileInfoHandler = () => {
-    const nameErrorMessage = textInputBasicValidation(nameInputValue, 'Name');
+    const nameErrorMessage = basicInputValidation(nameInputValue, 'Name');
     setNameError('');
     if (nameErrorMessage) {
       setNameError(nameErrorMessage);
