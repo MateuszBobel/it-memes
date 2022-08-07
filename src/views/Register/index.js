@@ -16,7 +16,7 @@ import { registerUser } from '../../store/authSlice/auth.actions';
 import {
   emailValidation,
   passwordValidation,
-  nameValidation,
+  textInputBasicValidation,
 } from '../../helpers';
 import Logo from '../../assets/logo.jpg';
 
@@ -46,7 +46,7 @@ export default function Register() {
 
   const registerButtonHandler = (e) => {
     e.preventDefault();
-    const nameErrorMessage = nameValidation(nameInputValue);
+    const nameErrorMessage = textInputBasicValidation(nameInputValue, 'Name');
     const emailErrorMessage = emailValidation(emailInputValue);
     const passwordErrorMessage = passwordValidation(passwordInputValue);
     setNameError('');

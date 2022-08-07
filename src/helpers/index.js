@@ -19,9 +19,9 @@ export const passwordValidation = (passwordValue) => {
   return '';
 };
 
-export const nameValidation = (nameValue) => {
-  if (!nameValue) {
-    return 'Name is required';
+export const textInputBasicValidation = (value, name) => {
+  if (!value) {
+    return `${name} is required`;
   }
   return '';
 };
