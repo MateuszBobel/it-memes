@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 import { updateDoc, doc, getDoc } from 'firebase/firestore';
 import { uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
