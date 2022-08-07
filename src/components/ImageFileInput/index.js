@@ -11,7 +11,7 @@ export default function ImageFileInput({ file, onChange, name }) {
       sx={{
         minHeight: '150px',
         width: '100%',
-        marginBottom: '10px',
+        margin: '8px 0 4px 0',
         border: !file && '1px dashed',
         borderColor: 'darkgray',
       }}
