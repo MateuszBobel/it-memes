@@ -94,7 +94,7 @@ export default function RemoveProfileForm() {
             type="password"
             id="current-password"
             value={passwordInputValue}
-            helperText={!!passwordError && passwordError}
+            helperText={passwordError}
             error={!!passwordError}
           />
         }

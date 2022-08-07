@@ -82,7 +82,7 @@ export default function Login() {
             type="email"
             name="email"
             value={emailInputValue}
-            helperText={!!emailError && emailError}
+            helperText={emailError}
             error={!!emailError}
           />
           <TextField
@@ -97,7 +97,7 @@ export default function Login() {
             type="password"
             id="password"
             value={passwordInputValue}
-            helperText={!!passwordError && passwordError}
+            helperText={passwordError}
             error={!!passwordError}
           />
           <Typography variant="body2" align="right">

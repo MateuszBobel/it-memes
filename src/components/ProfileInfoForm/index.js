@@ -68,7 +68,7 @@ export default function ProfileInfoForm() {
           placeholder="Name"
           value={nameInputValue}
           onChange={inputValueHandler}
-          helperText={!!nameError && nameError}
+          helperText={nameError}
           error={!!nameError}
         />
         <TextField

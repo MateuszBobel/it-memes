@@ -92,7 +92,7 @@ export default function ChangePasswordForm() {
           type="password"
           id="current-password"
           value={passwordInputValue}
-          helperText={!!passwordError && passwordError}
+          helperText={passwordError}
           error={!!passwordError}
         />
         <TextField
@@ -107,7 +107,7 @@ export default function ChangePasswordForm() {
           type="password"
           id="new-password"
           value={newPasswordInputValue}
-          helperText={!!newPasswordError && newPasswordError}
+          helperText={newPasswordError}
           error={!!newPasswordError}
         />
         <TextField
@@ -122,7 +122,7 @@ export default function ChangePasswordForm() {
           type="password"
           id="repeat-password"
           value={repeatPasswordInputValue}
-          helperText={!!repeatPasswordError && repeatPasswordError}
+          helperText={repeatPasswordError}
           error={!!repeatPasswordError}
         />
       </Box>

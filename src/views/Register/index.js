@@ -95,7 +95,7 @@ export default function Register() {
             name="name"
             autoComplete="name"
             value={nameInputValue}
-            helperText={!!nameError && nameError}
+            helperText={nameError}
             error={!!nameError}
           />
           <TextField
@@ -110,7 +110,7 @@ export default function Register() {
             type="email"
             name="email"
             value={emailInputValue}
-            helperText={!!emailError && emailError}
+            helperText={emailError}
             error={!!emailError}
           />
           <TextField
@@ -125,7 +125,7 @@ export default function Register() {
             type="password"
             id="password"
             value={passwordInputValue}
-            helperText={!!passwordError && passwordError}
+            helperText={passwordError}
             error={!!passwordError}
           />
           <Button

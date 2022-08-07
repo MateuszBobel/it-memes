@@ -73,7 +73,7 @@ export default function ForgotPassword() {
             type="email"
             name="email"
             value={emailInputValue}
-            helperText={!!emailError && emailError}
+            helperText={emailError}
             error={!!emailError}
           />
           <Button
