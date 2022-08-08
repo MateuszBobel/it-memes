@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from './store/authSlice/auth.actions';
 import LoadingScreen from './components/LoadingScreen';
+import AddMeme from './views/AddMeme';
 import Dashboard from './views/Dashboard';
 import Login from './views/Login';
 import Register from './views/Register';
@@ -28,6 +29,14 @@ function App() {
     <Routes>
       <Route path="/" element={<NavBar />}>
         <Route element={<Dashboard />} index />
+        <Route
+          element={
+            <PrivateRoute>
+              <AddMeme />
+            </PrivateRoute>
+          }
+          path="/add"
+        />
         <Route
           element={
             <PrivateRoute>
