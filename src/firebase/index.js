@@ -18,7 +18,10 @@ export const storage = getStorage();
 
 export const getAvatarFileRef = (userID, fileType) =>
   ref(storage, `avatars/${userID}.${fileType}`);
+export const getUserMemesFileRef = (userID, fileName) =>
+  ref(storage, `memes/${userID}/${fileName}`);
 
 export const usersCollection = collection(db, 'users');
+export const memesCollection = collection(db, 'memes');
 
 export default auth;
