@@ -14,12 +14,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Logo from '../../assets/logo.jpg';
 import { logoutUser } from '../../store/authSlice/auth.actions';
-
-const settings = [
-  { name: 'My Profile', isLink: true, link: '/profile' },
-  { name: 'Settings', isLink: true, link: '/settings' },
-  { name: 'Logout', isLink: false, link: null },
-];
+import MenuItems from '../../constants';
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -81,26 +76,19 @@ export default function NavBar() {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
-                  {settings.map((setting) =>
-                    setting.isLink ? (
+                  {MenuItems.map((item) =>
+                    item.isLink ? (
                       <MenuItem
                         component={Link}
-                        to={setting.link}
-                        key={setting.name}
+                        to={item.link}
+                        key={item.name}
                         onClick={handleCloseUserMenu}
                       >
-                        <Typography textAlign="center">
-                          {setting.name}
-                        </Typography>
+                        <Typography textAlign="center">{item.name}</Typography>
                       </MenuItem>
                     ) : (
-                      <MenuItem
-                        onClick={logoutButtonHandler}
-                        key={setting.name}
-                      >
-                        <Typography textAlign="center">
-                          {setting.name}
-                        </Typography>
+                      <MenuItem onClick={logoutButtonHandler} key={item.name}>
+                        <Typography textAlign="center">{item.name}</Typography>
                       </MenuItem>
                     )
                   )}
