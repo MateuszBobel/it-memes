@@ -21,8 +21,8 @@ export const uploadMeme = (meme) => async (dispatch, getState) => {
     const ref = getUserMemesFileRef(profileID, meme.file.name);
     const uploadedFile = await uploadBytes(ref, meme.file);
     const fileUrl = await getDownloadURL(uploadedFile.ref);
-    const memeDocRef = doc(memesCollection, profileID);
-    await setDoc(memeDocRef, { ...meme, file: fileUrl });
+    const memeDocRef = doc(memesCollection);
+    await setDoc(memeDocRef, { ...meme, authorId: profileID, file: fileUrl });
     dispatch(userMemesLoading(false));
   } catch (err) {
     dispatch(userMemesError(err.code));
