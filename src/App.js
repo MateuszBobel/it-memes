@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from './store/authSlice/auth.actions';
 import LoadingScreen from './components/LoadingScreen';
@@ -9,13 +9,14 @@ import Login from './views/Login';
 import Register from './views/Register';
 import ForgotPassword from './views/ForgotPassword';
 import Settings from './views/Settings';
+import Profile from './views/Profile';
 import NavBar from './components/NavBar';
 import PublicRoute from './hoc/PublicRoute';
 import PrivateRoute from './hoc/PrivateRoute';
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoaded } = useSelector((state) => state.auth);
+  const { isLoaded, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(fetchUser());
@@ -36,6 +37,22 @@ function App() {
             </PrivateRoute>
           }
           path="/add"
+        />
+        <Route
+          element={
+            <PrivateRoute>
+              <Navigate to={`/profile/${user.uid}`} replace />
+            </PrivateRoute>
+          }
+          path="/profile"
+        />
+        <Route
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+          path="/profile/:uid"
         />
         <Route
           element={

@@ -1,8 +1,18 @@
 /* eslint-disable import/prefer-default-export */
-import { setDoc, doc } from 'firebase/firestore';
+import { setDoc, doc, getDoc } from 'firebase/firestore';
 import { uploadBytes, getDownloadURL } from 'firebase/storage';
-import { userMemesLoading, userMemesError } from './content.slice';
-import { memesCollection, getUserMemesFileRef } from '../../firebase';
+import {
+  setUserInfo,
+  userInfoLoading,
+  userInfoError,
+  userMemesLoading,
+  userMemesError,
+} from './content.slice';
+import {
+  memesCollection,
+  usersCollection,
+  getUserMemesFileRef,
+} from '../../firebase';
 
 export const uploadMeme = (meme) => async (dispatch, getState) => {
   dispatch(userMemesLoading(true));
@@ -17,5 +27,22 @@ export const uploadMeme = (meme) => async (dispatch, getState) => {
   } catch (err) {
     dispatch(userMemesError(err.code));
     dispatch(userMemesLoading(false));
+  }
+};
+
+export const getUserInfo = (uid) => async (dispatch) => {
+  dispatch(userInfoLoading(true));
+  try {
+    const docRef = doc(usersCollection, uid);
+    const docSnap = await getDoc(docRef);
+    const userInfo = docSnap.data();
+    if (!userInfo) {
+      throw new Error('User not found');
+    }
+    dispatch(setUserInfo(userInfo));
+    dispatch(userInfoLoading(false));
+  } catch (err) {
+    dispatch(userInfoError(err.message));
+    dispatch(userInfoLoading(false));
   }
 };

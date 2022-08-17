@@ -3,11 +3,30 @@ import { createSlice } from '@reduxjs/toolkit';
 const contentSlice = createSlice({
   name: 'content',
   initialState: {
+    userInfo: {
+      name: '',
+      jobPosition: '',
+      city: '',
+      avatar: '',
+    },
+    userInfoLoading: false,
+    userInfoError: null,
+
     userMemes: [],
     userMemesLoading: false,
     userMemesError: null,
   },
   reducers: {
+    setUserInfo(state, action) {
+      state.userInfo = action.payload;
+    },
+    userInfoLoading(state, action) {
+      state.userInfoLoading = action.payload;
+    },
+    userInfoError(state, action) {
+      state.userInfoError = action.payload;
+    },
+
     setUserMemes(state, action) {
       state.userMemes = action.payload;
     },
@@ -20,6 +39,12 @@ const contentSlice = createSlice({
   },
 });
 
-export const { setUserMemes, userMemesLoading, userMemesError } =
-  contentSlice.actions;
+export const {
+  setUserInfo,
+  userInfoLoading,
+  userInfoError,
+  setUserMemes,
+  userMemesLoading,
+  userMemesError,
+} = contentSlice.actions;
 export default contentSlice.reducer;
