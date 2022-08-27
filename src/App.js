@@ -13,6 +13,7 @@ import Profile from './views/Profile';
 import NavBar from './components/NavBar';
 import PublicRoute from './hoc/PublicRoute';
 import PrivateRoute from './hoc/PrivateRoute';
+import Meme from './views/Meme';
 
 function App() {
   const dispatch = useDispatch();
@@ -31,28 +32,18 @@ function App() {
       <Route path="/" element={<NavBar />}>
         <Route element={<Dashboard />} index />
         <Route
+          element={<Navigate to={`/profile/${user?.uid}`} replace />}
+          path="/profile"
+        />
+        <Route element={<Profile />} path="/profile/:uid" />
+        <Route element={<Meme />} path="/meme/:id" />
+        <Route
           element={
             <PrivateRoute>
               <AddMeme />
             </PrivateRoute>
           }
           path="/add"
-        />
-        <Route
-          element={
-            <PrivateRoute>
-              <Navigate to={`/profile/${user.uid}`} replace />
-            </PrivateRoute>
-          }
-          path="/profile"
-        />
-        <Route
-          element={
-            <PrivateRoute>
-              <Profile />
-            </PrivateRoute>
-          }
-          path="/profile/:uid"
         />
         <Route
           element={

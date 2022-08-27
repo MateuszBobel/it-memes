@@ -3,48 +3,83 @@ import { createSlice } from '@reduxjs/toolkit';
 const contentSlice = createSlice({
   name: 'content',
   initialState: {
-    userInfo: {
+    viewedUser: {
       name: '',
       jobPosition: '',
       city: '',
       avatar: '',
     },
-    userInfoLoading: false,
-    userInfoError: null,
+    viewedUserLoading: false,
+    viewedUserError: null,
 
-    userMemes: [],
-    userMemesLoading: false,
-    userMemesError: null,
+    viewedUserMemes: [],
+    viewedUserMemeLastKey: null,
+    viewedUserMemesLoading: false,
+    viewedUserMemesError: null,
+
+    viewedMeme: null,
+    viewedMemeLoading: false,
+    viewedMemeError: null,
+
+    uploadMemeLoading: false,
+    uploadMemeError: false,
   },
-  reducers: {
-    setUserInfo(state, action) {
-      state.userInfo = action.payload;
-    },
-    userInfoLoading(state, action) {
-      state.userInfoLoading = action.payload;
-    },
-    userInfoError(state, action) {
-      state.userInfoError = action.payload;
-    },
 
-    setUserMemes(state, action) {
-      state.userMemes = action.payload;
+  reducers: {
+    setViewedUser(state, action) {
+      state.viewedUser = action.payload;
+      state.viewedUserError = null;
+      state.viewedUserMemes = [];
+      state.viewedUserMemeLastKey = null;
+      state.viewedUserMemesError = null;
     },
-    userMemesLoading(state, action) {
-      state.userMemesLoading = action.payload;
+    viewedUserLoading(state, action) {
+      state.viewedUserLoading = action.payload;
     },
-    userMemesError(state, action) {
-      state.userMemesError = action.payload;
+    viewedUserError(state, action) {
+      state.viewedUserError = action.payload;
+    },
+    setViewedUserMemes(state, action) {
+      state.viewedUserMemes = action.payload.memes;
+      state.viewedUserMemeLastKey = action.payload.lastKey;
+      state.viewedUserMemesError = null;
+    },
+    viewedUserMemesLoading(state, action) {
+      state.viewedUserMemesLoading = action.payload;
+    },
+    viewedUserMemesError(state, action) {
+      state.viewedUserMemesError = action.payload;
+    },
+    setViewedMeme(state, action) {
+      state.viewedMeme = action.payload;
+      state.viewedMemeError = null;
+    },
+    setViewedMemeLoading(state, action) {
+      state.viewedMemeLoading = action.payload;
+    },
+    setViewedMemeError(state, action) {
+      state.viewedMemeError = action.payload;
+    },
+    uploadMemeLoading(state, action) {
+      state.uploadMemeLoading = action.payload;
+    },
+    uploadMemeError(state, action) {
+      state.uploadMemeError = action.payload;
     },
   },
 });
 
 export const {
-  setUserInfo,
-  userInfoLoading,
-  userInfoError,
-  setUserMemes,
-  userMemesLoading,
-  userMemesError,
+  setViewedUser,
+  viewedUserLoading,
+  viewedUserError,
+  setViewedUserMemes,
+  viewedUserMemesLoading,
+  viewedUserMemesError,
+  setViewedMeme,
+  setViewedMemeLoading,
+  setViewedMemeError,
+  uploadMemeLoading,
+  uploadMemeError,
 } = contentSlice.actions;
 export default contentSlice.reducer;

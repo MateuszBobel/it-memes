@@ -1,12 +1,27 @@
-/* eslint-disable import/prefer-default-export */
-import { setDoc, doc, getDoc } from 'firebase/firestore';
+import {
+  setDoc,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+  limit,
+  orderBy,
+  startAfter,
+} from 'firebase/firestore';
 import { uploadBytes, getDownloadURL } from 'firebase/storage';
 import {
-  setUserInfo,
-  userInfoLoading,
-  userInfoError,
-  userMemesLoading,
-  userMemesError,
+  setViewedUser,
+  viewedUserLoading,
+  viewedUserError,
+  setViewedUserMemes,
+  viewedUserMemesLoading,
+  viewedUserMemesError,
+  setViewedMeme,
+  setViewedMemeLoading,
+  setViewedMemeError,
+  uploadMemeLoading,
+  uploadMemeError,
 } from './content.slice';
 import {
   memesCollection,
@@ -15,23 +30,28 @@ import {
 } from '../../firebase';
 
 export const uploadMeme = (meme) => async (dispatch, getState) => {
-  dispatch(userMemesLoading(true));
+  dispatch(uploadMemeLoading(true));
   try {
     const profileID = getState().auth.user.uid;
     const ref = getUserMemesFileRef(profileID, meme.file.name);
     const uploadedFile = await uploadBytes(ref, meme.file);
     const fileUrl = await getDownloadURL(uploadedFile.ref);
     const memeDocRef = doc(memesCollection);
-    await setDoc(memeDocRef, { ...meme, authorId: profileID, file: fileUrl });
-    dispatch(userMemesLoading(false));
+    await setDoc(memeDocRef, {
+      ...meme,
+      authorId: profileID,
+      createdAt: new Date(),
+      file: fileUrl,
+    });
+    dispatch(uploadMemeLoading(false));
   } catch (err) {
-    dispatch(userMemesError(err.code));
-    dispatch(userMemesLoading(false));
+    dispatch(uploadMemeError(err.code));
+    dispatch(uploadMemeLoading(false));
   }
 };
 
 export const getUserInfo = (uid) => async (dispatch) => {
-  dispatch(userInfoLoading(true));
+  dispatch(viewedUserLoading(true));
   try {
     const docRef = doc(usersCollection, uid);
     const docSnap = await getDoc(docRef);
@@ -39,10 +59,92 @@ export const getUserInfo = (uid) => async (dispatch) => {
     if (!userInfo) {
       throw new Error('User not found');
     }
-    dispatch(setUserInfo(userInfo));
-    dispatch(userInfoLoading(false));
+    dispatch(setViewedUser(userInfo));
+    dispatch(viewedUserLoading(false));
   } catch (err) {
-    dispatch(userInfoError(err.message));
-    dispatch(userInfoLoading(false));
+    dispatch(viewedUserError(err.message));
+    dispatch(viewedUserLoading(false));
+  }
+};
+
+export const getMemeInfo = (id) => async (dispatch) => {
+  dispatch(setViewedMemeLoading(true));
+  try {
+    const memeDocRef = doc(memesCollection, id);
+    const memeDocSnap = await getDoc(memeDocRef);
+    const memeInfo = memeDocSnap.data();
+    if (!memeInfo) {
+      throw new Error('Meme not found');
+    }
+    const docRef = doc(usersCollection, memeInfo.authorId);
+    const docSnap = await getDoc(docRef);
+    const userInfo = docSnap.data();
+    dispatch(
+      setViewedMeme({
+        id,
+        authorAvatar: userInfo.avatar,
+        ...memeInfo,
+      })
+    );
+    dispatch(setViewedMemeLoading(false));
+  } catch (err) {
+    dispatch(setViewedMemeError(err.message));
+    dispatch(setViewedMemeLoading(false));
+  }
+};
+
+export const getUserMemes = (uid) => async (dispatch) => {
+  dispatch(viewedUserMemesLoading(true));
+  try {
+    const memes = [];
+    let lastKey = null;
+    const q = query(
+      memesCollection,
+      where('authorId', '==', uid),
+      orderBy('createdAt', 'desc'),
+      limit(5)
+    );
+    const querySnapshot = await getDocs(q);
+    const docRef = doc(usersCollection, uid);
+    const docSnap = await getDoc(docRef);
+    const userInfo = docSnap.data();
+    querySnapshot.forEach((el) => {
+      memes.push({ id: el.id, authorAvatar: userInfo.avatar, ...el.data() });
+      lastKey = el.data().createdAt;
+    });
+    dispatch(setViewedUserMemes({ memes, lastKey }));
+    dispatch(viewedUserMemesLoading(false));
+  } catch (err) {
+    dispatch(viewedUserMemesError(err.code));
+    dispatch(viewedUserMemesLoading(false));
+  }
+};
+
+export const loadMoreUserMemes = (uid, key) => async (dispatch, getState) => {
+  dispatch(viewedUserMemesLoading(true));
+  try {
+    const loadedMemes = getState().content.viewedUserMemes;
+    const memes = [...loadedMemes];
+    let lastKey = null;
+    const q = query(
+      memesCollection,
+      where('authorId', '==', uid),
+      orderBy('createdAt', 'desc'),
+      startAfter(key),
+      limit(5)
+    );
+    const querySnapshot = await getDocs(q);
+    const docRef = doc(usersCollection, uid);
+    const docSnap = await getDoc(docRef);
+    const userInfo = docSnap.data();
+    querySnapshot.forEach((el) => {
+      memes.push({ id: el.id, authorAvatar: userInfo.avatar, ...el.data() });
+      lastKey = el.data().createdAt;
+    });
+    dispatch(setViewedUserMemes({ memes, lastKey }));
+    dispatch(viewedUserMemesLoading(false));
+  } catch (err) {
+    dispatch(viewedUserMemesError(err.code));
+    dispatch(viewedUserMemesLoading(false));
   }
 };

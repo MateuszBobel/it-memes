@@ -34,3 +34,10 @@ export const extractFileExtention = (fileName, defaultExtention = 'jpg') => {
   }
   return defaultExtention;
 };
+
+export const toDateTime = (sec) => {
+  const t = new Date(1970, 0, 1);
+  t.setSeconds(sec);
+  const date = t.toDateString().slice(-11);
+  return date;
+};

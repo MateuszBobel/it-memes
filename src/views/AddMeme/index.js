@@ -22,7 +22,7 @@ export default function AddMeme() {
   const [titleInputValue, setTitleInputValue] = useState('');
   const [titleError, setTitleError] = useState('');
   const [fileError, setFileError] = useState('');
-  const { userMemesLoading, userMemesError } = useSelector(
+  const { uploadMemeLoading, uploadMemeError } = useSelector(
     (state) => state.content
   );
 
@@ -111,17 +111,17 @@ export default function AddMeme() {
           handleDelete={deleteTagHandler}
           handleAdd={addTagHandler}
         />
-        {userMemesError && (
+        {uploadMemeError && (
           <Alert severity="error">Upload faild please try later!</Alert>
         )}
         <Button
           sx={{ alignSelf: 'flex-start', marginTop: '10px' }}
-          disabled={userMemesLoading}
+          disabled={uploadMemeLoading}
           onClick={addMemeHandler}
           color="primary"
           variant="contained"
         >
-          {userMemesLoading ? <CircularProgress size={26} /> : 'Upload'}
+          {uploadMemeLoading ? <CircularProgress size={26} /> : 'Upload'}
         </Button>
       </Box>
     </Box>
