@@ -12,6 +12,11 @@ const contentSlice = createSlice({
     viewedUserLoading: false,
     viewedUserError: null,
 
+    dashboardMemes: [],
+    dashboardMemeLastKey: null,
+    dashboardMemesLoading: false,
+    dashboardMemesError: null,
+
     viewedUserMemes: [],
     viewedUserMemeLastKey: null,
     viewedUserMemesLoading: false,
@@ -50,6 +55,17 @@ const contentSlice = createSlice({
     viewedUserMemesError(state, action) {
       state.viewedUserMemesError = action.payload;
     },
+    setDashboardMemes(state, action) {
+      state.dashboardMemes = action.payload.memes;
+      state.dashboardMemeLastKey = action.payload.lastKey;
+      state.dashboardMemesError = null;
+    },
+    dashboardMemesLoading(state, action) {
+      state.dashboardMemesLoading = action.payload;
+    },
+    dashboardMemesError(state, action) {
+      state.dashboardMemesError = action.payload;
+    },
     setViewedMeme(state, action) {
       state.viewedMeme = action.payload;
       state.viewedMemeError = null;
@@ -76,6 +92,9 @@ export const {
   setViewedUserMemes,
   viewedUserMemesLoading,
   viewedUserMemesError,
+  setDashboardMemes,
+  dashboardMemesLoading,
+  dashboardMemesError,
   setViewedMeme,
   setViewedMemeLoading,
   setViewedMemeError,

@@ -17,6 +17,9 @@ import {
   setViewedUserMemes,
   viewedUserMemesLoading,
   viewedUserMemesError,
+  setDashboardMemes,
+  dashboardMemesLoading,
+  dashboardMemesError,
   setViewedMeme,
   setViewedMemeLoading,
   setViewedMemeError,
@@ -90,6 +93,65 @@ export const getMemeInfo = (id) => async (dispatch) => {
   } catch (err) {
     dispatch(setViewedMemeError(err.message));
     dispatch(setViewedMemeLoading(false));
+  }
+};
+
+export const getMemes = () => async (dispatch) => {
+  dispatch(dashboardMemesLoading(true));
+  try {
+    const memes = [];
+    let lastKey = null;
+    const q = query(memesCollection, orderBy('createdAt', 'desc'), limit(5));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((el) => {
+      memes.push({ id: el.id, authorAvatar: '', ...el.data() });
+      lastKey = el.data().createdAt;
+    });
+    const memesWithUsersAvatar = await Promise.all(
+      memes.map(async (meme) => {
+        const docRef = doc(usersCollection, meme.authorId);
+        const docSnap = await getDoc(docRef);
+        return { ...meme, authorAvatar: docSnap.data().avatar };
+      })
+    );
+    dispatch(setDashboardMemes({ memes: memesWithUsersAvatar, lastKey }));
+    dispatch(dashboardMemesLoading(false));
+  } catch (err) {
+    dispatch(dashboardMemesError(err.code));
+    dispatch(dashboardMemesLoading(false));
+  }
+};
+
+export const loadMoreMemes = (key) => async (dispatch, getState) => {
+  dispatch(dashboardMemesLoading(true));
+  try {
+    const loadedMemes = getState().content.dashboardMemes;
+    const memes = [];
+    let lastKey = null;
+    const q = query(
+      memesCollection,
+      orderBy('createdAt', 'desc'),
+      startAfter(key),
+      limit(5)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((el) => {
+      memes.push({ id: el.id, authorAvatar: '', ...el.data() });
+      lastKey = el.data().createdAt;
+    });
+    const memesWithUsersAvatar = await Promise.all(
+      memes.map(async (meme) => {
+        const docRef = doc(usersCollection, meme.authorId);
+        const docSnap = await getDoc(docRef);
+        return { ...meme, authorAvatar: docSnap.data().avatar };
+      })
+    );
+    const allMemes = [...loadedMemes, ...memesWithUsersAvatar];
+    dispatch(setDashboardMemes({ memes: allMemes, lastKey }));
+    dispatch(dashboardMemesLoading(false));
+  } catch (err) {
+    dispatch(dashboardMemesError(err.code));
+    dispatch(dashboardMemesLoading(false));
   }
 };
 
