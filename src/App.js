@@ -10,6 +10,7 @@ import Register from './views/Register';
 import ForgotPassword from './views/ForgotPassword';
 import Settings from './views/Settings';
 import Profile from './views/Profile';
+import NotFound from './views/NotFound';
 import NavBar from './components/NavBar';
 import PublicRoute from './hoc/PublicRoute';
 import PrivateRoute from './hoc/PrivateRoute';
@@ -53,6 +54,7 @@ function App() {
           }
           path="/settings"
         />
+        <Route element={<NotFound />} path="*" />
       </Route>
       <Route
         element={
