@@ -52,7 +52,7 @@ export default function ProfileInfoForm() {
       noValidate
       autoComplete="off"
     >
-      <Typography sx={{ fontWeight: 'bold' }}>Proile info</Typography>
+      <Typography sx={{ fontWeight: 'bold' }}>Profile info</Typography>
       <Box
         sx={{
           display: 'flex',
