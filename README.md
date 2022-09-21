@@ -13,7 +13,7 @@
 The project allows users to share their favorite memes related to the IT industry.
 
 ### Demo
-Here is a working live demo : https://mateuszbobel.github.io/IT-memes/
+Here is a working live demo : https://mateuszbobel.github.io/it-memes/
 
 ### Technologies
 Project is created with:
