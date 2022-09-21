@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
@@ -15,7 +14,6 @@ import { uploadMeme } from '../../store/contentSlice/content.actions';
 
 export default function AddMeme() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const matches = useMediaQuery((theme) => theme.breakpoints.up('sm'));
   const [tags, setTags] = useState([]);
   const [fileInputValue, setFileInputValue] = useState(null);
@@ -62,7 +60,6 @@ export default function AddMeme() {
       );
       setTitleInputValue('');
       setFileInputValue(null);
-      navigate('/');
     }
   };
 
