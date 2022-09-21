@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.js": "/IT-memes/static/js/main.7002671c.js",
+    "main.js": "/IT-memes/static/js/main.f71fd992.js",
     "static/js/787.9d145ab5.chunk.js": "/IT-memes/static/js/787.9d145ab5.chunk.js",
     "static/media/sad-doge.png": "/IT-memes/static/media/sad-doge.29e10cb3de11cf9caab5.png",
     "index.html": "/IT-memes/index.html",
-    "main.7002671c.js.map": "/IT-memes/static/js/main.7002671c.js.map",
+    "main.f71fd992.js.map": "/IT-memes/static/js/main.f71fd992.js.map",
     "787.9d145ab5.chunk.js.map": "/IT-memes/static/js/787.9d145ab5.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.7002671c.js"
+    "static/js/main.f71fd992.js"
   ]
 }
