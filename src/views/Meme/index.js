@@ -15,8 +15,6 @@ export default function Meme() {
     (state) => state.content
   );
 
-  console.log(viewedMeme);
-
   useEffect(() => {
     dispatch(getMemeInfo(id));
   }, []);
