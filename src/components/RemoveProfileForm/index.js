@@ -39,8 +39,8 @@ export default function RemoveProfileForm() {
       setPasswordError(passwordErrorMessage);
     } else {
       dispatch(removeUserProfile(passwordInputValue));
+      handleClose();
     }
-    handleClose();
   };
 
   return (
